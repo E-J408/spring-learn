@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/demo/pom.xml" />
         <option value="$PROJECT_DIR$/spring-02-aop/pom.xml" />
         <option value="$PROJECT_DIR$/spring-03-tx/pom.xml" />
+        <option value="$PROJECT_DIR$/springmvc-restful-crud/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
