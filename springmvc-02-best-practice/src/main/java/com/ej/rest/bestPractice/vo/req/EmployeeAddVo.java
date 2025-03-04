@@ -1,27 +1,41 @@
-package com.ej.rest.bestPractice.bean;
+package com.ej.rest.bestPractice.vo.req;
 
 import com.ej.rest.bestPractice.annotation.Gender;
 import jakarta.validation.constraints.*;
-import lombok.Data;
 
 import java.math.BigDecimal;
 
+/**
+ * @program: ssm-parent
+ * @description: 封装添加Employee的请求的vo
+ * @author: EJ_Zheng
+ * @create: 2025-03-03 17:41
+ **/
 
-public class Employee {
+public class EmployeeAddVo {
     private Integer id;
 
+    @NotBlank(message = "姓名不能为空")
     private String Name;
+
+    @NotNull
+    @Max(value = 120, message = "年龄不能大于120岁")
+    @Min(value = 1, message = "年龄不能小于1岁")
     private Integer age;
+
+    @Email(message = "邮箱格式不正确")
     private String email;
+
+    @Gender(message = "{gender.message}")
     private String gender;
     private String address;
     private BigDecimal salary;
 
 
-    public Employee() {
+    public EmployeeAddVo() {
     }
 
-    public Employee(Integer id, String Name, Integer age, String email, String gender, String address, BigDecimal salary) {
+    public EmployeeAddVo(Integer id, String Name, Integer age, String email, String gender, String address, BigDecimal salary) {
         this.id = id;
         this.Name = Name;
         this.age = age;
@@ -144,6 +158,6 @@ public class Employee {
     }
 
     public String toString() {
-        return "Employee{id = " + id + ", Name = " + Name + ", age = " + age + ", email = " + email + ", gender = " + gender + ", address = " + address + ", salary = " + salary + "}";
+        return "EmployeeAddVo{id = " + id + ", Name = " + Name + ", age = " + age + ", email = " + email + ", gender = " + gender + ", address = " + address + ", salary = " + salary + "}";
     }
 }

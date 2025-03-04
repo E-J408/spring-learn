@@ -4,10 +4,18 @@ package com.ej.rest.bestPractice.controller;
 import com.ej.rest.bestPractice.bean.Employee;
 import com.ej.rest.bestPractice.common.R;
 import com.ej.rest.bestPractice.service.EmployeeService;
+import com.ej.rest.bestPractice.vo.req.EmployeeAddVo;
+import com.ej.rest.bestPractice.vo.req.EmployeeModifyVo;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class EmployeeRestController {
@@ -46,7 +54,9 @@ public class EmployeeRestController {
      * @return: R
      */
     @PostMapping("/employee")
-    public R add(@RequestBody Employee employee) {
+    public R add(@RequestBody @Valid EmployeeAddVo vo) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(vo, employee);
         employeeService.addEmployee(employee);
         return R.ok();
 
@@ -58,9 +68,12 @@ public class EmployeeRestController {
     * @return: void
     */
     @PutMapping("/employee")
-    public R update(@RequestBody Employee employee) {
+    public R update(@RequestBody @Valid EmployeeModifyVo vo) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(vo, employee);
         employeeService.updateEmployee(employee);
         return R.ok();
+
     }
 
     /**

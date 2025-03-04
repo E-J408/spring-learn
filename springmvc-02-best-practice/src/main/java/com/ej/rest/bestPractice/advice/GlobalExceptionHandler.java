@@ -3,7 +3,13 @@ package com.ej.rest.bestPractice.advice;
 
 import com.ej.rest.bestPractice.common.R;
 import com.ej.rest.bestPractice.exception.BizException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @program: ssm-parent
@@ -25,6 +31,22 @@ public class GlobalExceptionHandler {
     public R bizExceptionHandler(BizException e) {
         e.printStackTrace();
         return R.error(e.getCode(),e.getMsg());
+    }
+
+    /**
+     * @description: 拦截参数校验异常
+    * @Param: [e]
+    * @return: com.ej.rest.bestPractice.common.R
+    */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public R methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+        BindingResult result = e.getBindingResult();
+        Map<String, String> errorsMap = new HashMap<>();
+        for(FieldError fieldError: result.getFieldErrors())
+        {
+            errorsMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        return R.error(400,"数据校验异常", errorsMap);
     }
     @ExceptionHandler(Throwable.class)
     public R exceptionHandler(Throwable e) {
